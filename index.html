@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#211920">
+  <title>SHOPLY | Personal Shopper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navigasi utama">
+      <a class="brand" href="#dashboard" aria-label="SHOPLY beranda">
+        <span class="brand-mark">S</span>
+        <span>SHOPLY<span class="brand-dot">.</span><small>PRIVATE CLIENT OFFICE</small></span>
+      </a>
+      <p class="nav-caption">PRIVATE DESK</p>
+      <nav class="nav-list">
+        <button class="nav-link active" data-view="dashboard"><span class="nav-icon">⌂</span>Dashboard</button>
+        <button class="nav-link" data-view="customers"><span class="nav-icon">♙</span>Pelanggan</button>
+        <button class="nav-link" data-view="services"><span class="nav-icon">◇</span>Layanan &amp; produk</button>
+        <button class="nav-link" data-view="transactions"><span class="nav-icon">▤</span>Transaksi</button>
+        <button class="nav-link" data-view="transaction_details"><span class="nav-icon">≡</span>Detail transaksi</button>
+        <button class="nav-link" data-view="finance"><span class="nav-icon">Rp</span>Keuangan</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <span class="connection-dot" id="connection-dot"></span>
+        <div><strong id="connection-label">Memeriksa koneksi</strong><small>Database Supabase</small></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="breadcrumb">SHOPLY <span>/</span> <strong id="breadcrumb-label">Dashboard</strong></div>
+        <div class="topbar-right"><div class="office-mark"><span>PC</span><div><strong>PRIVATE CLIENT OFFICE</strong><small>JAKARTA · ID</small></div></div><div class="today-label" id="today-label"></div></div>
+      </header>
+
+      <div id="page-error" class="page-error" role="alert" hidden></div>
+
+      <section class="view-panel" id="view-dashboard">
+        <div class="page-heading dashboard-heading">
+          <div><p class="eyebrow">THE SHOPLY PRIVATE DESK</p><h1>Private fashion<br><em>concierge.</em></h1><p class="heading-copy">Kurasi eksklusif, layanan personal, dan kendali bisnis dalam satu meja kerja.</p></div>
+          <img class="heading-photo" src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Pelanggan sedang memilih busana di butik" fetchpriority="high">
+          <span class="photo-caption">PRIVATE CLIENT EDITION <i>NO. 01</i></span>
+        </div>
+        <section class="brand-edit" aria-labelledby="brand-edit-title">
+          <div class="brand-edit-heading"><div><p class="eyebrow">THE HOUSE SELECTION</p><h2 id="brand-edit-title">Label pilihan</h2></div><span>CURATED HOUSES <i>·</i> 12</span></div>
+          <ul class="brand-wall" id="brand-wall"></ul>
+        </section>
+        <div class="stats-grid">
+          <article class="stat-card stat-pink"><div class="stat-top"><span>Total pendapatan</span><span class="stat-icon">↗</span></div><strong id="stat-revenue">Rp0</strong><small>Dari pembayaran yang diterima</small></article>
+          <article class="stat-card stat-yellow"><div class="stat-top"><span>Jumlah transaksi</span><span class="stat-icon">▤</span></div><strong id="stat-transactions">0</strong><small>Seluruh transaksi tercatat</small></article>
+          <article class="stat-card stat-white"><div class="stat-top"><span>Pelanggan</span><span class="stat-icon">♙</span></div><strong id="stat-customers">0</strong><small>Pelanggan terdaftar</small></article>
+        </div>
+        <section class="table-section dashboard-table">
+          <div class="section-heading"><div><p class="eyebrow">AKTIVITAS TERBARU</p><h2>Transaksi terbaru</h2></div><button class="text-button" data-go="transactions">Lihat semua <span aria-hidden="true">→</span></button></div>
+          <div class="table-wrap"><table><thead><tr><th>No. transaksi</th><th>Pelanggan</th><th>Tanggal</th><th>Status</th><th>Pendapatan</th></tr></thead><tbody id="recent-transactions"></tbody></table></div>
+        </section>
+      </section>
+
+      <section class="view-panel" id="view-entity" hidden>
+        <div class="page-heading entity-heading"><div><p class="eyebrow" id="entity-eyebrow">DATA MASTER</p><h1 id="entity-title">Pelanggan</h1><p class="heading-copy" id="entity-description"></p></div><span class="heading-spark" aria-hidden="true">✳</span></div>
+        <section class="form-section">
+          <div class="section-heading form-heading"><div><p class="eyebrow">FORMULIR</p><h2 id="form-title">Tambah data</h2></div><button type="button" id="cancel-edit" class="quiet-button" hidden>Batal ubah</button></div>
+          <form id="entity-form"><div class="form-grid" id="form-fields"></div><div class="form-actions"><button type="submit" class="primary-button" id="submit-button"><span aria-hidden="true">＋</span> Simpan data</button></div></form>
+        </section>
+        <section class="table-section entity-table">
+          <div class="section-heading"><div><p class="eyebrow">DATA TERSIMPAN</p><h2 id="table-title">Daftar pelanggan</h2></div><div class="entity-table-tools"><span class="record-count" id="record-count">0 data</span><div class="bulk-actions" id="bulk-actions" hidden><span id="bulk-selection-count">0 dipilih</span><button type="button" id="bulk-delete-button" class="bulk-delete-button">Hapus pilihan</button></div></div></div>
+          <div class="table-wrap"><table><thead id="entity-table-head"></thead><tbody id="entity-table-body"></tbody></table></div>
+        </section>
+      </section>
+
+      <section class="view-panel finance-view" id="view-finance" hidden>
+        <div class="page-heading finance-heading">
+          <div><p class="eyebrow">SIKLUS AKUNTANSI</p><h1>Keuangan yang tertata.</h1><p class="heading-copy">Dari transaksi, jurnal, buku besar, sampai laporan laba rugi.</p></div>
+          <span class="finance-heading-note">FINANCE<br><strong>01—04</strong></span>
+        </div>
+        <div class="finance-toolbar">
+          <nav class="finance-tabs" aria-label="Laporan keuangan">
+            <button class="finance-tab active" data-finance-tab="journal">Jurnal umum</button>
+            <button class="finance-tab" data-finance-tab="ledger">Buku besar</button>
+            <button class="finance-tab" data-finance-tab="trial-balance">Neraca saldo</button>
+            <button class="finance-tab" data-finance-tab="income-statement">Laba rugi</button>
+          </nav>
+          <div class="period-fields">
+            <label>Dari <input type="date" id="finance-start"></label>
+            <label>Sampai <input type="date" id="finance-end"></label>
+          </div>
+        </div>
+
+        <div class="finance-stats">
+          <article class="finance-stat revenue-stat"><span>Pendapatan</span><strong id="finance-revenue">Rp0</strong><small>Diakui dari transaksi</small><i aria-hidden="true">↗</i></article>
+          <article class="finance-stat expense-stat"><span>Total beban</span><strong id="finance-expenses">Rp0</strong><small>Beban yang dicatat</small><i aria-hidden="true">↘</i></article>
+          <article class="finance-stat profit-stat"><span>Laba bersih</span><strong id="finance-profit">Rp0</strong><small>Pendapatan dikurangi beban</small><i aria-hidden="true">✳</i></article>
+        </div>
+
+        <details class="expense-drawer">
+          <summary><span class="expense-plus">＋</span><span><strong>Catat beban baru</strong><small>Belanja barang, operasional, dan biaya lainnya</small></span><span class="drawer-chevron">⌄</span></summary>
+          <form id="expense-form" class="expense-form">
+            <label>Tanggal<input type="date" name="entry_date" id="expense-date" required></label>
+            <label>Keterangan<input type="text" name="description" placeholder="Contoh: Belanja stok koleksi" maxlength="160" required></label>
+            <label>Akun beban<select name="expense_account_id" id="expense-account" required></select></label>
+            <label>Dibayar melalui<select name="payment_account_id" id="payment-account" required></select></label>
+            <label>Jumlah (Rp)<input type="number" name="amount" min="1" step="0.01" placeholder="0" required></label>
+            <button type="submit" class="primary-button" id="expense-submit"><span aria-hidden="true">＋</span> Catat beban</button>
+          </form>
+        </details>
+
+        <section class="finance-report table-section">
+          <div class="section-heading finance-report-heading">
+            <div><p class="eyebrow" id="finance-report-eyebrow">TAHAP 01 · PENCATATAN</p><h2 id="finance-report-title">Jurnal umum</h2></div>
+            <label class="ledger-picker" id="ledger-account-control" hidden>Akun<select id="ledger-account"></select></label>
+            <span class="balance-indicator" id="balance-indicator"><i></i> Seimbang</span>
+          </div>
+          <div class="table-wrap" id="finance-content"></div>
+        </section>
+        <p class="finance-footnote">Jurnal penjualan dibuat otomatis dari transaksi dan detail pesanan. HPP dan beban operasional dicatat melalui formulir beban.</p>
+      </section>
+      <dialog class="catalog-dialog" id="catalog-dialog" aria-labelledby="catalog-brand-name">
+        <div class="catalog-sheet">
+          <header class="catalog-heading">
+            <div><p class="eyebrow">THE HOUSE SELECTION</p><h2 id="catalog-brand-name">Katalog brand</h2><p id="catalog-count" class="catalog-count"></p></div>
+            <button type="button" id="catalog-close" class="catalog-close" aria-label="Tutup katalog">×</button>
+          </header>
+          <div class="catalog-toolbar">
+            <nav class="catalog-categories" id="catalog-categories" aria-label="Kategori katalog"></nav>
+            <label class="catalog-search"><span aria-hidden="true">⌕</span><input type="search" id="catalog-search" placeholder="Cari nama produk" aria-label="Cari nama produk"></label>
+          </div>
+          <div class="catalog-workspace">
+            <section class="catalog-listing" aria-label="Produk katalog">
+              <div class="catalog-products" id="catalog-products" aria-live="polite"></div>
+              <div class="catalog-empty" id="catalog-empty" hidden><strong>Belum ada pilihan untuk kategori ini.</strong><span>Tambahkan produk beserta foto, brand, dan jenisnya lewat form Layanan &amp; produk.</span></div>
+            </section>
+            <aside class="catalog-order" aria-label="Order desk">
+              <header class="catalog-order-heading"><div><span>PRIVATE ORDER DESK</span><h3>Pesanan Anda</h3></div><strong id="order-item-count">0 ITEM</strong></header>
+              <div class="order-items" id="order-items"><p class="order-empty">Pilih produk untuk mulai menyusun pesanan.</p></div>
+              <form id="catalog-order-form" class="catalog-order-form">
+                <label>Pelanggan<select id="order-customer" name="customer_id" required></select></label>
+                <label>Biaya jasa (Rp)<input id="order-service-fee" name="service_fee" type="number" min="0" step="1000" value="0"></label>
+                <div class="order-totals"><span>Subtotal produk<strong id="order-subtotal">Rp0</strong></span><span>Biaya jasa<strong id="order-fee-total">Rp0</strong></span><span class="order-grand-total">Total estimasi<strong id="order-total">Rp0</strong></span></div>
+                <button type="submit" class="catalog-checkout" id="order-submit" disabled>Buat pesanan <span aria-hidden="true">→</span></button>
+              </form>
+              <div class="order-feedback" id="order-feedback" role="status" aria-live="polite"></div>
+              <p class="order-note">Harga katalog merupakan estimasi. Konfirmasi harga dan ketersediaan sebelum pembayaran.</p>
+            </aside>
+          </div>
+          <footer class="catalog-footer"><span>CURATED FOR PRIVATE CLIENTS</span><button type="button" class="catalog-add" id="catalog-add-product">＋ Tambah produk</button></footer>
+        </div>
+      </dialog>
+      <footer class="page-footer">SHOPLY <span>·</span> Sistem Informasi Akuntansi Personal Shopper</footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../backend/config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
