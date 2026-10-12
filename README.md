@@ -2,8 +2,19 @@
 
 Sistem informasi akuntansi untuk jasa personal shopper fashion. Aplikasi memakai tepat empat tabel Supabase: pelanggan, layanan/produk, transaksi (termasuk rincian pesanan), dan catatan keuangan (akun serta jurnal).
 
-NAYLA CLARISSA_12030124120008 
-https://bloomienay.github.io/SHOPLY/
+🌐 **Demo aplikasi:** [Buka SHOPLY]https://github.com/bloomienay/SHOPLY)
+
+## Identitas tugas
+
+| Keterangan | Detail |
+|---|---|
+| Nama | Nayla Clarissa |
+| NIM | 12030124120008 |
+| Mata Kuliah | Pengkodean dan Pemograman |
+| Kelas | D |
+| Dosen Pengampu | Dr. Totok Dewayanto, S.E., M.Si., Akt. |
+
+**Disusun untuk memenuhi Tugas Project UTS Pengkodean dan Pemograman.**
 
 ## Struktur Proyek
 
