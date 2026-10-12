@@ -2,7 +2,7 @@
 
 Sistem informasi akuntansi untuk jasa personal shopper fashion. Aplikasi memakai tepat empat tabel Supabase: pelanggan, layanan/produk, transaksi (termasuk rincian pesanan), dan catatan keuangan (akun serta jurnal).
 
-🌐 **Demo aplikasi:** [Buka SHOPLY](https://github.com/bloomienay/SHOPLY)
+🌐 **Demo aplikasi:** [Buka SHOPLY](https://bloomienay.github.io/SHOPLY/)
 
 ## Identitas tugas
 
